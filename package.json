@@ -31,7 +31,7 @@
     "amazing-time-picker": "^1.8.0",
     "angular2-chartjs": "^0.5.1",
     "angular2-notifications": "^0.7.8",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.0.0-beta",
     "c3": "^0.7.20",
     "core-js": "^3.6.5",
     "css-animator": "^2.3.1",
