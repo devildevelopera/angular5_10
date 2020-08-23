@@ -1,0 +1,367 @@
+/*
+  Theme Name: Name - 
+  Author: Humayun Ahmed
+  Support: humayunahmed82@gmail.com
+  Description: Creative  HTML5 template.
+  Version: 1.0
+*/
+
+/* CSS Index 
+-----------------------------------
+1. Theme default css
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
+8. 
+9. 
+10. 
+11. 
+12. 
+13. 
+14. 
+
+*/
+
+
+/*===========================
+    1. Theme default css 
+===========================*/
+
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800');
+
+ body {
+	font-family: 'Poppins', sans-serif;
+	font-weight: normal;
+	font-style: normal;
+}
+.img {
+	max-width: 100%;
+	-webkit-transition: all 0.3s ease-out 0s;
+	transition: all 0.3s ease-out 0s;
+}
+
+a:focus,
+input:focus,
+textarea:focus,
+button:focus {
+	text-decoration: none;
+	outline: none;
+}
+
+a:focus,
+a:hover{
+	text-decoration: none;
+}
+
+span,
+a{
+    /* display: inline-block; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 700;
+	/* color: #000; */
+	margin-top: 0px;
+}
+
+h1 {
+	font-weight: 500;
+}
+h2 {
+	font-size: 36px;
+}
+h3 {
+	font-size: 28px;
+}
+h4 {
+	font-size: 22px;
+}
+h5 {
+	font-size: 18px;
+}
+h6 {
+	font-size: 16px;
+}
+ul,ol {
+	margin: 0px;
+	padding: 0px;
+    list-style-type: none;
+}
+
+p {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	/* color: #909291; */
+	margin-bottom: 0px;
+}
+
+.bg_cover{
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+/* checkbox css start */
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+
+
+/* tabs-area css start */
+
+/* checkbox css start */
+/* The container */
+.checkBox {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 16px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkBox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: transparent;
+	border: 1px solid #000;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkBox input:checked ~ .checkmark {
+  background-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkBox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkBox .checkmark::after {
+	left: 8px;
+	top: -6px;
+	width: 8px;
+	height: 21px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(40deg);
+	border-color: #000;
+}
+/* checkbox css end */
+.tabs-area {
+	padding: 50px 0;
+}
+
+
+/* tab menu css start */
+/* .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+	background-color: #ddd;
+	border-color: #dee2e6 #dee2e6 #fff;
+	color: #000;
+	border-bottom-color: #000;
+} */
+/* tab menu css end */
+
+
+
+.tb-content-wrap {
+	/* margin-top: 50px; */
+}
+.single-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.m-bottom {
+  margin-bottom: 30px;
+}
+.input-design {
+	max-width: 100px;
+	height: 30px;
+	border: 1px solid #000;
+	padding: 3px;
+	text-align: center;
+}
+.input-design.extra {
+	max-width: 175px;
+}
+.single-checkBox {
+	margin-right: 10px;
+	max-width: 160px;
+	width: 154px;
+}
+
+.input-1 {
+  display: flex;
+  align-items: center;
+}
+
+.input-1>label {
+  margin: 0;
+  margin-right: 14px;
+}
+.input-1.m-right {
+  margin-right: 15px;
+}
+.input-1.extra {
+	width: 180px;
+	position: relative;
+}
+.time-wrap {
+	display: flex;
+	margin-left: 20px;
+	align-items: center;
+}
+.time-icon {
+	display: inline-block;
+	border: 1px solid #000;
+	border-left: 0;
+	width: 35px;
+	height: 30px;
+	text-align: center;
+	line-height: 36px;
+	opacity: .9;
+	position: absolute;
+	right: 5px;
+	border-radius: 0;
+	border-right: 0;
+}
+.to {
+	margin: 0 15px;
+}
+#datepicker {
+	border-radius: 0;
+}
+.select-main-wrap {
+	max-width: 600px;
+	margin: 0 auto;
+}
+.single-checkBoxTwo {
+	width: 50%;
+	float: left;
+	margin-bottom: 30px;
+}
+.single-checkBoxTwo .checkmark {
+	border-radius: 3px;
+}
+.text-area-inside textarea {
+	height: 35px;
+	border: 1px solid #000;
+	padding: 3px 15px;
+	transition: height .3s ease;
+	width:100%;
+}
+.text-area-inside textarea:focus {
+	height: 100px;
+}
+.additional-part-2 {
+	max-width: 400px;
+	margin-left: auto;
+}
+.text-area-inside + input {
+	border: 1px solid #000;
+	height: 35px;
+	width: 100%;
+	padding: 3px 15px;
+	margin-top: 20px;
+}
+
+.box-btn {
+	background: transparent;
+	border: 1px solid #000;
+	padding: 7px 12px;
+	margin-right: 10px;
+	cursor:pointer;
+	transition: .3s;
+  }
+  .box-btn:hover {
+	  background: #DDDDDD;
+	  border-color: #DDDDDD;
+  }
+  .modifier-button {
+	display: flex;
+	align-items: center;
+  }
+  .left-side {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 42px;
+	height: 110px;
+	justify-content: space-between;
+	margin-right: 10px;
+}
+.modifier-content {
+	margin-top: 10px;
+	display: flex;
+	min-height: 250px;
+	width: 100%;
+}
+.right-sight {
+	width: 100%;
+	border: 1px solid #000;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+#myTab li a {
+	color: #000;
+	border: ;
+	border-radius: 0;
+}
+.time-wrap .btn.btn-outline-secondary.border-left-0 {
+	border-color: #000;
+	border-radius: 0;
+}
+/* tabs-area css start */
+
+
+

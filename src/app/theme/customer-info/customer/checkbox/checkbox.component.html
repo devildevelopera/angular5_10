@@ -1,0 +1,103 @@
+<!-- <simple-notifications [options]="options"></simple-notifications> -->
+<!--  -->
+<simple-notifications [options]="options"></simple-notifications>
+<app-card>
+  <ngx-datatable
+    class="data-table dt-chk"
+    [rows]="customerList"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [selected]="selected"
+    [loadingIndicator]="true"
+    (activate)="onActivate($event)"
+    (select)='onSelect($event)'
+    [scrollbarH]="true">
+    <!-- <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"> -->
+      <!-- <ng-template class="datatable-checkbox" ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+        <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+          <label>
+            <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+          </label>
+        </div>
+
+      </ng-template> -->
+      <!-- <ng-template class="datatable-checkbox" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+        <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+          <label>
+            <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+            <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+          </label>
+        </div>
+      </ng-template> -->
+    <!-- </ngx-datatable-column> -->
+    <ngx-datatable-column name="First Name" >
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+               title="Double click to edit" 
+               (dblclick)="editing[rowIndex + '-row.firstName'] = true"
+               *ngIf="!editing[rowIndex + '-row.firstName']"
+              >
+              {{row.firstName}}
+            </span>
+            <input class="form-control"
+              autofocus
+              (blur)="updateValue($event,'row.firstName', row, rowIndex)"
+              *ngIf="editing[rowIndex + '-row.firstName']"
+              type="text" 
+              [value]="row.firstName"
+            />
+          </ng-template>
+  </ngx-datatable-column>
+    <ngx-datatable-column name="Last Name">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span
+           title="Double click to edit" 
+           (dblclick)="editing[rowIndex + '-row.lastName'] = true"
+           *ngIf="!editing[rowIndex + '-row.lastName']"
+          >
+          {{row.lastName}}
+        </span>
+        <input class="form-control"
+          autofocus
+          (blur)="updateValue($event,'row.lastName', row, rowIndex)"
+          *ngIf="editing[rowIndex + '-row.lastName']"
+          type="text" 
+          [value]="row.lastName"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+  
+    <ngx-datatable-column name="Phone Number">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span
+           title="Double click to edit" 
+           (dblclick)="editing[rowIndex + '-row.phone1'] = true"
+           *ngIf="!editing[rowIndex + '-row.phone1']"
+          >
+          {{row.phone1}}
+        </span>
+        <input class="form-control"
+          autofocus
+          (blur)="updateValue($event,'row.phone1', row, rowIndex)"
+          *ngIf="editing[rowIndex + '-row.phone1']"
+          type="number" 
+          [value]="row.phone1"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Action" [canAutoResize]="false" [sortable]="false">
+
+
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+        <!-- <mat-icon class="secondary-text s-16 cusrsor" (click)="UpdateNodeById(row.id)"  matTooltip="Update Node ">edit</mat-icon> -->
+        <!-- <mat-icon class="secondary-text s-16 cusrsor" (click)="DeleteNodeById(row.id)" matTooltip="Delete Node">delete</mat-icon> -->
+       <i class="icofont icofont-ui-edit" (click)="UpdateInventoryById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+       <i class="icofont icofont-ui-delete" (click)="deleteInventoryById(row.id)" style="margin: 10px;size: 10px;cursor: pointer"></i>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</app-card>

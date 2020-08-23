@@ -1,0 +1,351 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader [fgsColor]="config.fgsColor" [fgsType]="config.fgsType" [fgsSize]="config.fgsSize">
+</ngx-ui-loader>
+<div class="row" *ngIf="!isAddModifier && !isEditModifier">
+  <div class="col-sm-12" style="margin-bottom: 10px">
+    <h4>Modifiers</h4>
+
+
+    <button class="btn btn-primary" (click)="newModifier()" style="float: right;margin-left: 10px;margin-right: 10px"><i
+        class="icofont icofont-plus"></i>New Modifier</button>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="col-md-8 offset-md-2">
+      <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input type="text" (keyup)="fiterByName($event.target.value)" class="form-control" placeholder="Search">
+      </div>
+    </div>
+    <br>
+    <div>
+      <app-modifier-list *ngIf="modifiers" [modifiers]='modifiers' (isDeleteOne)="deleteOne($event)" (isEditMode)="isEditModeOpen($event)"></app-modifier-list>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="isAddModifier">
+  <form #modifierForm="ngForm" (ngSubmit)="modifierForm.form.valid && save()" style="align-content: center;">
+    <div class="row">
+      <div class="col-sm-12" style="margin-bottom: 10px">
+        <h4>New Modifier</h4>
+        <button type="button" (click)="getBackAdd()" class="btn btn-danger"
+          style="float: right; margin-left: 10px;margin-right: 10px">
+          <i class="icofont icofont-reply"></i>Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" style="float: right; margin-left: 10px;margin-right: 10px">
+          Save
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <app-card>
+        <div class="offset-sm-1">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>StoreID</label>
+                <div>
+                  <select name="storeId" [(ngModel)]="formData.storeId" class="form-control">
+                    <option [value]="'ALL'">ALL</option>
+                    <option *ngFor="let store of stores;  let x = index;" [value]="store.id">
+                      {{store.companyName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Department</label>
+                <div>
+                  <select name="deptId" [(ngModel)]="formData.deptId" class="form-control">
+                    <option [value]="'ALL'">ALL</option>
+                    <option *ngFor="let dept of departments; let i = index;" [value]="dept.id">
+                      {{dept.deptName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <div class="form-group" style="margin-top: -2rem;">
+                <label>Modifier Number</label>
+                <div>
+                  <input name="modifierNum" #modifierNum='ngModel' [(ngModel)]='formData.modifierNum' type="number"
+                    class="form-control" required />
+                  <div *ngIf="modifierForm.submitted && modifierNum.invalid"
+                    class="messages text-danger ng-star-inserted">
+                    <span class="help-block" *ngIf="modifierNum?.errors.required">Please enter modifier name</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Modifier Name</label>
+                <div>
+                  <input type="text" name="modifierName" [(ngModel)]="formData.modifierName" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 1</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice1" #modifierName='ngModel'
+                    [(ngModel)]="formData.modifierPrice1" class="form-control" />
+                  <div *ngIf="modifierForm.submitted && modifierName.invalid"
+                    class="messages text-danger ng-star-inserted">
+                    <span class="help-block" *ngIf="modifierName?.errors.required">Please enter modifier name</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 1</label>
+                <div>
+                  <input type="text" name="modifierADDDSC1" [(ngModel)]="formData.modifierADDDSC1"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 2</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice2" [(ngModel)]="formData.modifierPrice2"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 2</label>
+                <div>
+                  <input type="text" name="modifierADDDSC2" [(ngModel)]="formData.modifierADDDSC2"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 3</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice3" [(ngModel)]="formData.modifierPrice3"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 3</label>
+                <div>
+                  <input type="text" name="modifierADDDSC3" [(ngModel)]="formData.modifierADDDSC3"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 4</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice4" [(ngModel)]="formData.modifierPrice4"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 4</label>
+                <div>
+                  <input type="text" name="modifierADDDSC4" [(ngModel)]="formData.modifierADDDSC4"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </form>
+</div>
+<div *ngIf="isEditModifier">
+  <form #modifierForm="ngForm" (ngSubmit)="modifierForm.form.valid && update()" style="align-content: center;">
+    <div class="row">
+      <div class="col-sm-12" style="margin-bottom: 10px">
+        <h4>Update Modifier</h4>
+        <button type="button" (click)="getBackEdit()" class="btn btn-danger"
+          style="float: right; margin-left: 10px;margin-right: 10px">
+          <i class="icofont icofont-reply"></i>Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" style="float: right; margin-left: 10px;margin-right: 10px">
+          Update
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <app-card>
+        <div class="offset-sm-1">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>StoreID</label>
+                <div>
+                  <select name="storeId" class="form-control" [(ngModel)]="formData.storeId">
+                    <option [value]="'ALL'">ALL</option>
+                    <option *ngFor="let store of stores" [value]="store.id">
+                      {{store.companyName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label>Department</label>
+                <div>
+                  <select name="deptId" [(ngModel)]="formData.deptId" class="form-control">
+                    <option [value]="'ALL'">ALL</option>
+                    
+                    <option *ngFor="let dept of departments" [value]="dept.id">
+                      {{dept.deptName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <div class="form-group" style="margin-top: -2rem;">
+                <label>Modifier Number</label>
+                <div>
+                  <input name="modifierNum" #modifierNum='ngModel' [(ngModel)]='formData.modifierNum' type="number"
+                    class="form-control" required />
+                  <div *ngIf="modifierForm.submitted && modifierNum.invalid"
+                    class="messages text-danger ng-star-inserted">
+                    <span class="help-block" *ngIf="modifierNum?.errors.required">Please enter modifier name</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Modifier Name</label>
+                <div>
+                  <input type="text" name="modifierName" [(ngModel)]="formData.modifierName" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 1</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice1" #modifierName='ngModel'
+                    [(ngModel)]="formData.modifierPrice1" class="form-control" />
+                  <div *ngIf="modifierForm.submitted && modifierName.invalid"
+                    class="messages text-danger ng-star-inserted">
+                    <span class="help-block" *ngIf="modifierName?.errors.required">Please enter modifier name</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 1</label>
+                <div>
+                  <input type="text" name="modifierADDDSC1" [(ngModel)]="formData.modifierADDDSC1"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 2</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice2" [(ngModel)]="formData.modifierPrice2"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 2</label>
+                <div>
+                  <input type="text" name="modifierADDDSC2" [(ngModel)]="formData.modifierADDDSC2"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 3</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice3" [(ngModel)]="formData.modifierPrice3"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 3</label>
+                <div>
+                  <input type="text" name="modifierADDDSC3" [(ngModel)]="formData.modifierADDDSC3"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Price 4</label>
+                <div>
+                  <input type="numbrt" name="modifierPrice4" [(ngModel)]="formData.modifierPrice4"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label>Extra Description 4</label>
+                <div>
+                  <input type="text" name="modifierADDDSC4" [(ngModel)]="formData.modifierADDDSC4"
+                    class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,177 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<ngx-ui-loader
+  [fgsColor]="config.fgsColor"
+  [fgsType]="config.fgsType"
+  [fgsSize]="config.fgsSize"
+></ngx-ui-loader>
+<div class="row">
+  <div class="col-sm-12">
+    <!-- Tab variant tab card start -->
+    <div class="row">
+      <div class="col-md-12 col-lg-12"></div>
+    </div>
+    <!-- Tab variant tab card start -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 10px">
+    <h4>Quick Item</h4>
+  </div>
+  <div class="col-sm-12">
+    <app-card [cardOptionBlock]="true">
+      <form [formGroup]="quickItemForm" (ngSubmit)="save()">
+          <div class="row">
+              <div class="col-sm-2">
+                  <div class="from-group">
+                    <label for="storeId">Store ID</label>
+                    <select name="storeid" class="form-control" (change)="handleStoreId($event)">
+                      <option></option>
+                      <option *ngFor="let store of stores" [value]="store.storeId">{{store.storeId}}</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+          <br>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+                <label></label>
+              <button
+                type="submit"
+                [disabled]="!quickItemForm.valid"
+                class="btn btn-inverse">
+                <span style="margin-left: 3rem; margin-right: 3rem;">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div formArrayName="items">
+          <div  *ngFor="let child of quickItemForm.controls.items; let i=index">
+            <div class="row" formGroupName="{{i}}">
+                    <div class="col-md-1">
+                          <div class="form-group">
+                              <label>ItemNumber</label>
+                                <input
+                                  type="number"
+                                  name="itemnum"
+                                  class="form-control"
+                                  formControlName="itemnum"
+                                />
+                                <div *ngIf="isInvalidForm(i , 'itemnum')">
+                                  <div *ngIf="isRequired(i , 'itemnum')" class="messages text-danger">
+                                    Field required
+                                  </div>
+                                </div>                                  
+                            </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label>Item ID</label>
+                            <input
+                              type="number"
+                              name="itemid"
+                              class="form-control"
+                              formControlName="itemid"
+                            />
+                            <div *ngIf="isInvalidForm(i , 'itemid')">
+                              <div *ngIf="isRequired(i , 'itemid')" class="messages text-danger">
+                                Field required
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label>Item name</label>
+                        
+                          <input
+                            type="text"
+                            name="itemname"
+                            class="form-control"
+                            formControlName="itemname"
+                          />
+                          <div *ngIf="isInvalidForm(i , 'itemname')">
+                            <div *ngIf="isRequired(i , 'itemname')" class="messages text-danger">
+                              Iten name is required
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>Department</label>
+                        
+                          <select
+                            name="deptid"
+                            class="form-control"
+                            formControlName="deptid">
+                            <option [value]="">Select department</option>
+                            <option *ngFor="let dept of departments" [value]="dept.deptId">{{dept.deptName}}</option>
+                          </select>
+                          <div *ngIf="isInvalidForm(i , 'deptid')">
+                            <div *ngIf="isRequired(i , 'deptid')" class="messages text-danger">
+                              department is required
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <div class="form-group">
+                        <label>Cost</label>
+                        
+                          <input
+                            type="number"
+                            name="cost"
+                            class="form-control"
+                            formControlName="cost"
+                          />
+                          <div *ngIf="isInvalidForm(i , 'cost')">
+                            <div *ngIf="isRequired(i , 'cost')" class="messages text-danger">
+                              cost is required
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <div class="form-group">
+                        <label>Price</label>
+                        
+                          <input
+                            type="number"
+                            name="itemprice"
+                            class="form-control"
+                            formControlName="itemprice"
+                          />
+                          <div *ngIf="isInvalidForm(i , 'itemprice')">
+                            <div *ngIf="isRequired(i , 'itemprice')" class="messages text-danger">
+                              price is required
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <div class="form-group">
+                        <label></label>
+                        <button type="button" (click)="patch()" [disabled]="!storeId" class="btn btn-inverse">
+                          ADD LINE
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <div class="form-group">
+                        <label></label>
+                        <button type="button" (click)="delete(i)" class="btn btn-inverse">
+                          DELETE
+                        </button>
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

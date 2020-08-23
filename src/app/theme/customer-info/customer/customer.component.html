@@ -1,0 +1,482 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader>
+<div class="row" *ngIf="!enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Customers</h4>
+     
+      <!-- <button class="btn btn-defat" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete Selected</button> -->
+      <!-- <button class="btn btn-primary" (click)="enableDisableBulkEdit()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Bulk edit</button> -->
+      <!-- <button class="btn btn-primary" (click)="enableDisableEditMode()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Add New Customer</button> -->
+      <!-- <button class="btn btn-primary" (click)="getfilteredList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Search</button>  -->
+    </div>
+
+    <div class="col-sm-12">
+       
+        <app-card  [cardOptionBlock]="true">
+          <div class="row">
+          </div>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+         
+          <!-- Basic Form Inputs card start -->
+          <form>
+              
+            <div class="row">
+              <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>First Name</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('firstName',$event.target.value)" class="form-control" maxlength="50">
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Last Name</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('lastName',$event.target.value)" class="form-control">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Phone Number</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('phone1',$event.target.value)" class="form-control">
+                      </div>
+                    </div>
+                </div>
+            </div>
+          
+        
+            
+            
+            
+            
+            
+          </form>
+        </app-card>
+        <!-- Input Alignment card end -->
+        <!-- <app-checkbox [customerList]="customerList" ></app-checkbox> -->
+        <app-card>
+          <ngx-datatable
+            class="data-table dt-chk"
+            [rows]="customerList"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10"
+            [selected]="selected"
+            [loadingIndicator]="true"
+            (activate)="onActivate($event)"
+            (select)='onSelect($event)'
+            [scrollbarH]="true">
+            <!-- <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+        
+              </ng-template> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+              </ng-template> -->
+            <!-- </ngx-datatable-column> -->
+            <ngx-datatable-column name="First Name" >
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span
+                       title="Double click to edit" 
+                       (dblclick)="editing[rowIndex + '-row.firstName'] = true"
+                       *ngIf="!editing[rowIndex + '-row.firstName']"
+                      >
+                      {{row.firstName}}
+                    </span>
+                    <input class="form-control"
+                      autofocus
+                      (blur)="updateValue($event,'row.firstName', row, rowIndex)"
+                      *ngIf="editing[rowIndex + '-row.firstName']"
+                      type="text" 
+                      [value]="row.firstName"
+                    />
+                  </ng-template>
+          </ngx-datatable-column>
+            <ngx-datatable-column name="Last Name">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span
+                   title="Double click to edit" 
+                   (dblclick)="editing[rowIndex + '-row.lastName'] = true"
+                   *ngIf="!editing[rowIndex + '-row.lastName']"
+                  >
+                  {{row.lastName}}
+                </span>
+                <input class="form-control"
+                  autofocus
+                  (blur)="updateValue($event,'row.lastName', row, rowIndex)"
+                  *ngIf="editing[rowIndex + '-row.lastName']"
+                  type="text" 
+                  [value]="row.lastName"
+                />
+              </ng-template>
+            </ngx-datatable-column>
+          
+            <ngx-datatable-column name="Phone Number">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span
+                   title="Double click to edit" 
+                   (dblclick)="editing[rowIndex + '-row.phone1'] = true"
+                   *ngIf="!editing[rowIndex + '-row.phone1']"
+                  >
+                  {{row.phone1}}
+                </span>
+                <input class="form-control"
+                  autofocus
+                  (blur)="updateValue($event,'row.phone1', row, rowIndex)"
+                  *ngIf="editing[rowIndex + '-row.phone1']"
+                  type="number" 
+                  [value]="row.phone1"
+                />
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action" [canAutoResize]="false" [sortable]="false">
+        
+        
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+               <i class="icofont icofont-ui-edit" (click)="UpdateCustomerById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+               <i class="icofont icofont-ui-delete" (click)="deleteCustomerById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-card>
+      </div>
+     
+</div>
+
+
+<div class="row" *ngIf="enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+        <button class="btn btn-primary" (click)="backToInventory()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+        <button class="btn btn-primary" (click)="SaveCustomerInfo(CustomerForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Save</button>
+      </div>
+    <div class="row">
+        <div class="col-sm-12">
+          <app-card>
+            <div class="row m-b-30">
+              <div class="col-md-12 col-xl-12">
+                <div class="md-tabs">
+                  <ngb-tabset>
+                    <ngb-tab title="Customer">
+                      <ng-template ngbTabContent>
+                        <div [@fadeInOutTranslate] class="m-t-15">
+                          <div>Customer Details</div>
+                          <div class="m-12">------------------------------------------------------------------------------------------------------------------------------------------------</div>
+                         <br>
+                          <form [formGroup]="CustomerForm" novalidate>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <div>
+                                          <input type="text" [(ngModel)]="modal.firstName" class="form-control" formControlName="firstName"  maxlength="50">
+                                        </div>
+                                        <span *ngIf="CustomerForm.get('firstName').touched && CustomerForm.get('firstName').hasError('required')" class="mandatory">
+                                          First Name is Required
+                                        </span>
+                                      </div>
+                                </div>
+                                <div class="col-lg-4" >
+                                  <p>Date Created : {{ modal.dateCreated}}</p>
+                                  <p>Last Activity : {{ modal.lastActivity}}</p>
+                               </div>
+                                 <div class="col-lg-2">
+                                   <p>Reward Points</p>
+                                   <div  style="background-color:lightgreen;color:black;padding:20px;">
+                                    {{modal.rewardPoints}}
+                                 </div>
+                                </div>
+                               
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <div>
+                                          <input type="text" [(ngModel)]="modal.lastName"  formControlName="lastName" class="form-control" maxlength="50">
+                                        </div>
+                                        <span *ngIf="CustomerForm.get('lastName').touched && CustomerForm.get('lastName').hasError('required')" class="mandatory">
+                                          Last Name is Required
+                                        </span>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <p>Most Recent Order : {{ modal.mostRecentOrders}}</p>
+                                    <p>Total Orders count : {{ modal.totalOrderCount}}</p>
+                                 </div>
+                                
+                              </div>
+                              <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label>Email</label>
+                                          <div>
+                                            <input type="text"  [(ngModel)]="modal.email" formControlName="email"  class="form-control" maxlength="50">
+                                          </div>
+                                          <span *ngIf="CustomerForm.get('email').touched && CustomerForm.get('email').hasError('required')" class="mandatory">
+                                            Email Address is Required
+                                          </span>
+                                        </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <p>Most ordered Item : {{ modal.mostOrderItems}}</p>
+                                    <p>Account Balance : {{ modal.acctBalance}}</p>
+                                 </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label>Phone Number</label>
+                                          <div>
+                                            <input type="text" [(ngModel)]="modal.phone1" formControlName="phone1"  class="form-control" maxlength="50">
+                                          </div>
+                                          <span *ngIf="CustomerForm.get('phone1').touched && CustomerForm.get('phone1').hasError('required')" class="mandatory">
+                                            Phone Number is Required
+                                          </span>
+                                        </div>
+                                  </div>
+                                 
+                               
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label>Address</label>
+                                          <div>
+                                            <input type="text" [(ngModel)]="modal.address1" formControlName="address1"  class="form-control">
+                                          </div>
+                                          <span *ngIf="CustomerForm.get('address1').touched && CustomerForm.get('address1').hasError('required')" class="mandatory">
+                                            Address is Required!
+                                          </span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                    <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Address 2</label>
+                                          <div>
+                                            <input type="text" [(ngModel)]="modal.address2"  formControlName="address2"  class="form-control">
+                                          </div>
+                                         
+                                      </div>
+                                </div>
+                               
+                                
+                             
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label>City</label>
+                                          <div>
+                                           <input type="text" [(ngModel)]="modal.city"  formControlName="city"  class="form-control">
+                                         </div>
+                                         <span *ngIf="CustomerForm.get('city').touched && CustomerForm.get('city').hasError('required')" class="mandatory">
+                                           City is Required!
+                                         </span>
+                                        </div>
+                                   </div>
+                                  </div>
+                                   <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label>State</label>
+                                          <div>
+                                            <input type="text" [(ngModel)]="modal.state" formControlName="state"  class="form-control">
+                                          </div>
+                                          <span *ngIf="CustomerForm.get('state').touched && CustomerForm.get('state').hasError('required')" class="mandatory">
+                                            State is Required!
+                                          </span>
+                                        </div>
+                                </div>
+                                
+                                
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Zip Code</label>
+                                            <div>
+                                              <input type="text" [(ngModel)]="modal.zipCode" formControlName="zipCode"  class="form-control">
+                                            </div>
+                                            <span *ngIf="CustomerForm.get('zipCode').touched && CustomerForm.get('zipCode').hasError('required')" class="mandatory">
+                                              Zip Code is Required!
+                                            </span>
+                                          </div>
+                                     </div>
+                                </div>
+                            </form>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Order's">
+                      <ng-template ngbTabContent>
+                        <div [@fadeInOutTranslate] class="m-t-15">
+                          <p class="m-3">2. Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et imperdiet felis amet.</p>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Account">
+                      <ng-template ngbTabContent>
+                        <div [@fadeInOutTranslate] class="m-t-15">
+                          <p class="m-3">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                  </ngb-tabset>
+                </div>
+              </div>
+             
+            </div>
+           
+          </app-card>
+          <!-- Material tab card end -->
+        </div>
+      </div>
+  <!-- <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Add Customer</h4>
+     
+      <button class="btn btn-primary" (click)="backToInventory()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+      <button class="btn btn-primary" (click)="SaveCustomerInfo(CustomerForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Save</button>
+    </div>
+  <div class="col-sm-12">
+
+      <app-card  [cardOptionBlock]="true">
+          <form [formGroup]="CustomerForm" novalidate>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>First Name</label>
+                      <div>
+                        <input type="text" class="form-control" formControlName="firstName"  maxlength="50">
+                      </div>
+                      <span *ngIf="CustomerForm.get('firstName').touched && CustomerForm.get('firstName').hasError('required')" class="mandatory">
+                        First Name is Required
+                      </span>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Last Name</label>
+                      <div>
+                        <input type="text"  formControlName="lastName" class="form-control" maxlength="50">
+                      </div>
+                      <span *ngIf="CustomerForm.get('lastName').touched && CustomerForm.get('lastName').hasError('required')" class="mandatory">
+                        Last Name is Required
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div>
+                          <input type="text"  formControlName="email"  class="form-control" maxlength="50">
+                        </div>
+                        <span *ngIf="CustomerForm.get('email').touched && CustomerForm.get('email').hasError('required')" class="mandatory">
+                          Email Address is Required
+                        </span>
+                      </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <div>
+                          <input type="text"  formControlName="phone1"  class="form-control" maxlength="50">
+                        </div>
+                        <span *ngIf="CustomerForm.get('phone1').touched && CustomerForm.get('phone1').hasError('required')" class="mandatory">
+                          Phone Number is Required
+                        </span>
+                      </div>
+                </div>
+               
+              </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div>
+                          <input type="text"  formControlName="address1"  class="form-control">
+                        </div>
+                        <span *ngIf="CustomerForm.get('address1').touched && CustomerForm.get('address1').hasError('required')" class="mandatory">
+                          Address is Required!
+                        </span>
+                      </div>
+                  </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Address 2</label>
+                        <div>
+                          <input type="text"  formControlName="address2"  class="form-control">
+                        </div>
+                       
+                    </div>
+              </div>
+             
+              
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>City</label>
+                        <div>
+                         <input type="text"  formControlName="city"  class="form-control">
+                       </div>
+                       <span *ngIf="CustomerForm.get('city').touched && CustomerForm.get('city').hasError('required')" class="mandatory">
+                         City is Required!
+                       </span>
+                      </div>
+                 </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>State</label>
+                        <div>
+                          <input type="text"  formControlName="state"  class="form-control">
+                        </div>
+                        <span *ngIf="CustomerForm.get('state').touched && CustomerForm.get('state').hasError('required')" class="mandatory">
+                          State is Required!
+                        </span>
+                      </div>
+              </div>
+              
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="form-group">
+                          <label>Zip Code</label>
+                          <div>
+                            <input type="text"  formControlName="zipCode"  class="form-control">
+                          </div>
+                          <span *ngIf="CustomerForm.get('zipCode').touched && CustomerForm.get('zipCode').hasError('required')" class="mandatory">
+                            Zip Code is Required!
+                          </span>
+                        </div>
+                   </div>
+              </div>
+              
+             
+
+           
+
+          </form>
+
+      </app-card>
+    
+    </div> -->
+   
+</div>

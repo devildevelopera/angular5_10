@@ -1,0 +1,649 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+      [fgsColor]="config.fgsColor"
+      [fgsType]="config.fgsType"
+      [fgsSize]="config.fgsSize">
+</ngx-ui-loader>
+<div class="row" *ngIf="!IsImport && !enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Products</h4>
+     
+      <!-- <button class="btn btn-defat" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete Selected</button> -->
+      <button class="btn btn-primary" (click)="enableDisableImport()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-upload"></i>Import</button>
+      <button class="btn btn-primary" (click)="getfilteredList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Search</button> 
+      <!-- <button class="btn btn-primary" 
+              (click)="enableDisableBulkEdit()" 
+              style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>New Product</button> -->
+      <button class="btn btn-primary" 
+              (click)="newProduct()" 
+              style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-plus"></i>New Product</button>
+    </div>
+
+    <div class="col-sm-12">
+       
+        <app-card  [cardOptionBlock]="true">
+          <div class="row">
+          </div>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+         
+          <!-- Basic Form Inputs card start -->
+          <form>
+              
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Item Name</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('itemname',$event.target.value)" class="form-control" maxlength="50">
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Bar Code</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('barcode',$event.target.value)" class="form-control">
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                 <div class="form-group">
+                     <label>Department</label>
+                     <div>
+                       <select name="select" (change)="filterListbyParamerters('dept',$event.target.value)" class="form-control">
+                           <option [value]="" >Select Department</option>
+                         <option *ngFor="let depts of DepartmentDropdownList" [value]="depts.deptName">{{depts.deptName}}</option>
+                       </select>
+                     </div>
+                   </div>
+              </div>
+              <!-- <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Select Sub Department</label>
+                      <div>
+                        <select name="select" class="form-control">
+                           <option [value]="">Select Sub Department</option>
+                           <option *ngFor="let subFamily of SubfamilyDropdownList" [value]="subFamily.id">{{subFamily.subFamilyName}}</option>
+                        </select>
+                      </div>
+                    </div>
+              </div> -->
+              <div class="col-lg-4">
+                 <div class="form-group">
+                     <label>Family</label>
+                     <div>
+                       <select name="select" (change)="filterListbyParamerters('family',$event.target.value)" class="form-control">
+                           <option [value]="" >Select Family</option>
+                           <option *ngFor="let family of FamilyDropdownList" [value]="family.familyName">{{family.familyName}}</option>
+                       </select>
+                     </div>
+                   </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Select Sub Family</label>
+                      <div>
+                         <select name="select" (change)="filterListbyParamerters('subFamily',$event.target.value)" class="form-control">
+                           <option [value]="" >Select Sub Family</option>
+                           <option *ngFor="let subFamily of SubfamilyDropdownList" [value]="subFamily.subFamilyName">{{subFamily.subFamilyName}}</option>
+                        </select>
+                      </div>
+                    </div>
+            </div>
+            </div>
+            <div class="row">
+        
+                <div class="col-lg-4">
+                   <div class="form-group">
+                       <label>Size</label>
+                       <div>
+                          <select name="select" (change)="filterListbyParamerters('size',$event.target.value)" class="form-control">
+                              <option [value]="" >Select Size</option>
+                              <option *ngFor="let size of SizeDropdownList" [value]="size.id">{{size.unit}} {{size.measurement}}</option>
+                           </select>
+                       </div>
+                     </div>
+                </div>
+                <div class="col-lg-4">
+                   <div class="form-group">
+                       <label>Vendor</label>
+                       <div>
+                         <select name="select" (change)="filterListbyParamerters('vendor',$event.target.value)" class="form-control">
+                            <option [value]="">Select Vendor</option>
+                            <option *ngFor="let vendor of VendorsDropdownList" [value]="vendor.vendorName">{{vendor.vendorName}}</option>
+                         </select>
+                       </div>
+                     </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <div>
+                            <select name="select" (change)="filterListbyParamerters('brand',$event.target.value)" class="form-control">
+                                <option [value]="">Select Brand</option>
+                                <option *ngFor="let brand of BrandDropdownList" [value]="brand.brandName">{{brand.brandName}}</option>
+                            </select>
+                        </div>
+                      </div>
+                  
+               </div>
+               <!-- <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Store</label>
+                      <div>
+                        <select name="select" class="form-control">
+                           <option [value]="">Select Store</option>
+                           <option *ngFor="let subFamily of SubfamilyDropdownList" [value]="subFamily.id">{{subFamily.subFamilyName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  
+               </div> -->
+              </div>
+            
+            
+            
+             <!-- <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Add New Item</button>
+                 </div> 
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Save</button>
+                 </div> 
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Delete</button>
+                 </div> 
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Duplicate</button>
+                 </div> 
+             </div> -->
+            
+          </form>
+        </app-card>
+        <!-- Input Alignment card end -->
+        <app-checkbox [inventories]="inventoryList" (isEditMode)="isEditModeOpen($event)"></app-checkbox>
+      </div>
+     
+</div>
+
+<div class="page-body" *ngIf="IsImport && !enableEditMode">
+  <div class="row">
+      <div class="col-sm-12" style="margin-bottom: 10px">
+          <!-- <button class="btn btn-defat" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete Selected</button> -->
+          <button class="btn btn-primary" (click)="sampleFileDownload()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-download-alt"></i>Sample File Download</button>
+          <button class="btn btn-primary" (click)="enableDisableImport()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+          <!-- <button class="btn btn-primary" (click)="getfilteredList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Search</button>  -->
+        </div>
+    <div class="col-sm-12">
+      <app-card [title]="'Inventory File Import'">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="sub-title">Drag & Drop</div>
+            <div
+              ng2FileDrop
+              [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+              (fileOver)="fileOverBase($event)"
+              [uploader]="uploader"
+              class="well ngb-drop-zone text-center">
+              Drag & Drop files here
+            </div>
+
+            <div
+              ng2FileDrop
+              [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+              (fileOver)="fileOverAnother($event)"
+              [uploader]="uploader"
+              class="well ngb-drop-zone text-center">
+              Drag & Drop files here
+            </div>
+
+            <div class="sub-title">Choose File</div>
+            <label class="custom-file">
+              <input type="file" ng2FileSelect accept=".csv,.xls" [uploader]="uploader" class="custom-file-input">
+              <span class="custom-file-control"></span>
+            </label>
+          </div>
+
+          <div class="col-md-9">
+            <div class="sub-title">Upload Queue</div>
+            <p>Queue length: {{ uploader?.queue?.length }}</p>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th width="50%">Name</th>
+                  <th>Size</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td><strong>{{ item?.file?.name }}</strong></td>
+                  <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                  <td *ngIf="uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="fa fa-check"></i></span>
+                    <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
+                    <span *ngIf="item.isError"><i class="fa fa-times"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <span class="fa fa-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                      <span class="fa fa-ban"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
+                      <span class="fa fa-trash"></span> Remove
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="text-center">
+                    <span>Your Uploaded Files</span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="sub-title">Queue progress</div>
+              <p><ngb-progressbar type="primary" [value]="uploader.progress"></ngb-progressbar></p>
+
+              <div class="sub-title">Common Action</div>
+              <button type="button" class="btn btn-success" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="fa fa-upload"></span> Upload all
+              </button>
+              <button type="button" class="btn btn-warning" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="fa fa-ban"></span> Cancel all
+              </button>
+              <button type="button" class="btn btn-danger" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="fa fa-trash"></span> Remove all
+              </button>
+            </div>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+
+</div>
+<div class="row" *ngIf="enableEditMode">
+  <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Update Item</h4>
+      <!-- <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Duplicate</button>
+      <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete</button>
+      <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Save</button> -->
+      <button class="btn btn-primary" (click)="backToInventory()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+      <button class="btn btn-primary" (click)="UpdateInventoryDetails(InventoryForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Update Item</button>
+    </div>
+  <div class="col-sm-12">
+
+      <app-card  [cardOptionBlock]="true">
+          <form [formGroup]="InventoryForm" novalidate>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Item Description</label>
+                      <div>
+                        <input type="text" [(ngModel)]="editModel.itemName" class="form-control" formControlName="itemName"  maxlength="50">
+                      </div>
+                      <span *ngIf="InventoryForm.get('itemName').touched && InventoryForm.get('itemName').hasError('required')" class="mandatory">
+                        Item Description is Required!
+                      </span>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Bar Code</label>
+                      <div>
+                        <input type="text" [(ngModel)]="editModel.itemNum" formControlName="itemNum" class="form-control">
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Item ID</label>
+                        <div>
+                          <input type="text"  formControlName="itemId" [(ngModel)]="editModel.itemId" class="form-control" maxlength="50" disabled>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Item Price</label>
+                        <div>
+                          <input type="number" [(ngModel)]="editModel.itemPrice" formControlName="itemPrice"  class="form-control">
+                        </div>
+                        <span *ngIf="InventoryForm.get('itemPrice').touched && InventoryForm.get('itemPrice').hasError('required')" class="mandatory">
+                          Item Price is Required!
+                        </span>
+                      </div>
+                  </div>
+              </div>
+            <div class="row">
+              <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Size</label>
+                      <div>
+                         <select name="select" [(ngModel)]="editModel.sizeList" formControlName="sizeList" class="form-control">
+                           <option [value]="">Select Size</option>
+                           <option *ngFor="let size of SizeDropdownList" [value]="size.sizeId">{{ size.unit}} {{size.measurement}}</option>
+                        </select>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group">
+                     <label>Department</label>
+                     <div>
+                       <select name="select" [(ngModel)]="editModel.deptName" formControlName="deptName" class="form-control">
+                           <option [value]="">Select Department</option>
+                         <option *ngFor="let depts of DepartmentDropdownList" [value]="depts.deptName">{{depts.deptName}}</option>
+                       </select>
+                     </div>
+                     <span *ngIf="InventoryForm.get('deptName').touched && InventoryForm.get('deptName').hasError('required')" class="mandatory">
+                      Dept Name is Required!
+                    </span>
+                   </div>
+              </div>
+              <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Brand</label>
+                      <div>
+                        <select name="select" [(ngModel)]="editModel.brand" formControlName="brand" class="form-control">
+                            <option [value]="">Select Brand</option>
+                            <option *ngFor="let brand of BrandDropdownList" [value]="brand.brandName">{{brand.brandName}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group">
+                     <label>Family</label>
+                     <div>
+                       <select name="select" [(ngModel)]="editModel.family" formControlName="family" class="form-control">
+                           <option [value]="">Select Family</option>
+                           <option *ngFor="let family of FamilyDropdownList" [value]="family.familyName">{{family.familyName}}</option>
+                       </select>
+                     </div>
+                   </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Select Sub Family</label>
+                        <div>
+                          <select name="select" [(ngModel)]="editModel.subFamily" formControlName="subFamily" class="form-control">
+                             <option [value]="">Select Sub Family</option>
+                             <option *ngFor="let subFamily of SubfamilyDropdownList" [value]="subFamily.subFamilyName">{{subFamily.subFamilyName}}</option>
+                          </select>
+
+                        </div>
+                      </div>
+              </div>
+              <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Vendor</label>
+                      <div>
+                        <select name="select" [(ngModel)]="editModel.vendorName" formControlName="vendorName" class="form-control">
+                           <option [value]="">Select Vendor</option>
+                           <option *ngFor="let vendor of VendorsDropdownList" [value]="vendor.vendorName">{{vendor.vendorName}}</option>
+                        </select>
+                      </div>
+                    </div>
+               </div>
+               <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Vendor Part #</label>
+                    <div>
+                      <input type="number" [(ngModel)]="editModel.vendorPartNumber" formControlName="vendorPartNumber" class="form-control" maxlength="50">
+                    </div>
+                  </div>
+            </div>
+              <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Section</label>
+                      <div>
+                        <input type="text" [(ngModel)]="editModel.section" formControlName="section" class="form-control">
+                      </div>
+                    </div>
+                </div>
+
+
+                <!--
+                <div class="col-lg-3">
+
+
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Store</label>
+                      <div>
+                        <select name="select" class="form-control">
+                           <option [value]="">Select Store</option>
+                           <option *ngFor="let subFamily of SubfamilyDropdownList" [value]="subFamily.id">{{subFamily.subFamilyName}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+               </div> -->
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label>Item Per Case</label>
+                          <div>
+                            <input type="number" [(ngModel)]="editModel.numPerCase" formControlName="numPerCase" class="form-control">
+                          </div>
+                        </div>
+                    </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label>Points</label>
+                          <div>
+                            <input type="text" [(ngModel)]="editModel.points" formControlName="points" class="form-control">
+                          </div>
+                        </div>
+                    </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Bulk Price</label>
+                      <div>
+                        <input type="text" [(ngModel)]="editModel.bulkPricing" formControlName="bulkPricing" class="form-control">
+                      </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Food Stampable </label>
+                      <div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-3">
+                  <div class="form-group">
+                      <label>Reorder Level</label>
+                      <div>
+                        <input type="number" [(ngModel)]="editModel.reorder" formControlName="reorder" class="form-control">
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <div>
+                          <input type="text" [(ngModel)]="editModel.location" formControlName="location" class="form-control">
+                        </div>
+                      </div>
+                  </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Min Price </label>
+                        <div>
+                          <input type="number" [(ngModel)]="editModel.minPrice" formControlName="minPrice" class="form-control">
+                        </div>
+                      </div>
+                  </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Stock</label>
+                    <div>
+                      <input type="number" [(ngModel)]="editModel.minPrice" formControlName="stock" class="form-control">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Cost</label>
+                    <div>
+                      <input type="number" [(ngModel)]="editModel.cost" formControlName="cost" value="0.00" class="form-control">
+                    </div>
+                   
+                  </div>
+              </div>
+              <!-- <div class="col-lg-3"> 
+                <div class="form-group">
+                    <label>Reorder Level</label>
+                    <div>
+                      <input type="number" formControlName="reorder" class="form-control">
+                    </div>
+                  </div>
+              </div> -->
+            </div>
+              <!-- <div class="row">
+
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label>Tax 1 </label>
+                          <div>
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                    </div>
+                </div> -->
+              <div class="row">
+                <div class="col-sm-12 col-xl-12 ">
+                  <div class="checkbox-color checkbox-default">
+                    <input id="active_online" [(ngModel)]="editModel.active_online" formControlName="active_online"  type="checkbox" >
+                    <label  for="active_online">
+                      Available online
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="askDescription" [(ngModel)]="editModel.askDescription" formControlName="askDescription" type="checkbox" >
+                    <label for="askDescription">
+                      Ask Description
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="askPrice"  [(ngModel)]="editModel.askPrice"  formControlName="askPrice" type="checkbox" >
+                    <label for="askPrice">
+                      Ask Price
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="askQuantity"  [(ngModel)]="editModel.askQuantity"  formControlName="askQuantity" type="checkbox" checked="">
+                    <label for="askQuantity">
+                      Ask for Quantity
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="checkId" [(ngModel)]="editModel.checkId" formControlName="checkId" type="checkbox" >
+                    <label for="checkId">
+                      Check ID 1
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="checkId2" [(ngModel)]="editModel.checkId2" formControlName="checkId2" type="checkbox" >
+                    <label for="checkId2">
+                      Check ID 2
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="autoWeigh" [(ngModel)]="editModel.autoWeigh" formControlName="autoWeigh" type="checkbox" >
+                    <label for="autoWeigh">
+                      Auto weigh
+                    </label>
+                  </div>
+                  <!-- <div class="checkbox-color checkbox-default">
+                    <input id="checkbox12" type="checkbox" checked="">
+                    <label for="checkbox12">
+                      Auto weigh
+                    </label>
+                  </div> -->
+                  <div class="checkbox-color checkbox-default">
+                    <input id="foodStampable" [(ngModel)]="editModel.foodStampable" formControlName="foodStampable" type="checkbox" >
+                    <label for="foodStampable">
+                      Food Stampable
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="tax_1" [(ngModel)]="editModel.tax_1" formControlName="tax_1"  type="checkbox" >
+                    <label for="tax_1">
+                      Tax
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="countItem" [(ngModel)]="editModel.countItem" formControlName="countItem"  type="checkbox" >
+                    <label for="countItem">
+                      Count Item
+                    </label>
+                  </div>
+                  <div class="checkbox-color checkbox-default">
+                    <input id="disabled" [(ngModel)]="editModel.disabled" formControlName="disabled"  type="checkbox" >
+                    <label for="disabled">
+                      Disabled
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+             <!-- <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Add New Item</button>
+                 </div>
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Save</button>
+                 </div>
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Delete</button>
+                 </div>
+                 <div class="col-lg-3">
+                    <button class="btn btn-mat btn-inverse ">Duplicate</button>
+                 </div>
+             </div> -->
+
+          </form>
+        <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+
+        <!-- Basic Form Inputs card start -->
+
+      </app-card>
+      <!-- Input Alignment card end -->
+    </div>
+   
+</div>

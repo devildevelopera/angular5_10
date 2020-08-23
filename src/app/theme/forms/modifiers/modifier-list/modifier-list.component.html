@@ -1,0 +1,38 @@
+<simple-notifications [options]="options"></simple-notifications>
+<app-card>
+  <ngx-datatable
+    class="data-table dt-chk"
+    [rows]="modifiers"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [selected]="selected"
+    [loadingIndicator]="true"
+    [scrollbarH]="true">
+
+    <ngx-datatable-column name="Modifier Name">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <span>
+                {{row.modifierName}}
+              </span>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Modifier Number">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <span>
+                {{row.modifierNum}}
+              </span>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Action" [canAutoResize]="false" [sortable]="false">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+        <i class="icofont icofont-ui-edit" (click)="updateModifier(row)"  style="margin: 10px;size: 20px;cursor: pointer"></i>
+        <i class="icofont icofont-ui-delete" (click)="deleteModifier(row.id)" style="margin: 10px;size: 10px;cursor: pointer"></i>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</app-card>

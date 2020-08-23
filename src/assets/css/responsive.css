@@ -1,0 +1,76 @@
+/* Normal desktop :1200px. */
+@media (min-width: 1200px) and (max-width: 1500px) {
+
+
+}
+
+
+/* Normal desktop :992px. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .time-wrap {
+        margin-top: 30px;
+        margin-left: 1px;
+    }
+
+}
+
+ 
+/* Tablet desktop :768px. */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .time-wrap {
+        margin-top: 30px;
+        margin-left: 1px;
+    }
+    .additional-part-2 {
+        margin-left: 0;
+    }
+
+}
+
+ 
+/* small mobile :320px. */
+@media (min-width: 320px) and (max-width: 767.98px) {
+    .time-wrap {
+        margin-top: 30px;
+        margin-left: 1px;
+    }
+    .additional-part-2 {
+        margin-left: 0;
+    }
+    .input-1 {
+        margin-top: 20px;
+    }
+    .time-wrap {
+        flex-direction: column;
+    }
+    .input-1.extra {
+        margin-top: 0;
+    }
+    .time-wrap.date-wrap .input-1 {
+        margin-top: 0;
+    }
+    .box-btn {
+        padding: 7px 10px;
+        font-size: 10px;
+    }
+    #myTab li a {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    .tb-content-wrap {
+        margin-top: 28px;
+    }
+    .checkBox {
+        font-size: 14px;
+    }
+ 
+}
+ 
+/* Large Mobile :480px. */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .time-wrap {
+        margin-left: 48px;
+    }
+
+ 
+}

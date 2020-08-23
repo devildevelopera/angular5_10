@@ -1,0 +1,448 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader>
+<div class="row">
+    <div class="col-sm-12">
+      <!-- Tab variant tab card start -->
+        <div class="row">
+          <div class="col-md-12 col-md-12">
+
+          </div>
+
+        </div>
+      <!-- Tab variant tab card start -->
+    </div>
+  </div>
+
+
+
+
+<div class="row" *ngIf="!IsAddInventory">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+        <h4>Edit Access Level</h4>
+        <!-- <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Duplicate</button>
+        <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete</button> -->
+        <button class="btn btn-primary" (click)="BacktoList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back to List</button>
+        <button class="btn btn-primary" *ngIf="permissionView==0" (click)="EnableAccessLevelDetails(AccessLevelForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Enable Edit  Access Level</button>
+        <button class="btn btn-primary" *ngIf="permissionView==1" (click)="SubmitAccessLevelDetails(AccessLevelForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Update  Access Level</button>
+      </div>
+    <div class="col-sm-12">
+
+        <app-card  [cardOptionBlock]="true">
+            <form [formGroup]="AccessLevelForm" novalidate>
+                <div class="row">
+                        <div class="col-md-12" *ngIf="permissionView==0">
+                               <h4>Access Level : {{model.accessLevel}}</h4>
+                              </div>
+                    <div class="col-md-12" *ngIf="permissionView==1">
+                        <div class="form-group">
+                            <label>Access Level Name <span class="mandatory">*</span></label>
+                        <div>
+                          <input type="text"  [(ngModel)]="model.accessLevel"  class="form-control" formControlName="accessLevel"  maxlength="50">
+                        </div>
+                        <span *ngIf="AccessLevelForm.get('accessLevel').touched && AccessLevelForm.get('accessLevel').hasError('required')" class="mandatory">
+                          Access Level is Required!
+                        </span>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-1" >
+                            <ui-switch [disabled]="permissionView==0?true:false"  [(ngModel)]="model.addCcTips"  formControlName="addCcTips" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Add Cc Tips
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.applyGratuity" formControlName="applyGratuity" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Apply Gratuity
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.approveCashcount" formControlName="approveCashcount" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Approve Cash Count
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.cashAlerts" formControlName="cashAlerts" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Cash Alerts
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.cashPickup" formControlName="cashPickup" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Cash Pickup
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.closeShift" formControlName="closeShift" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Close Shift
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.comp" formControlName="comp" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Comp
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.currentCash" formControlName="currentCash" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Current Cash
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.custmorsAccount" formControlName="custmorsAccount" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Custmors Account
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.deptsAdd" formControlName="deptsAdd" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Depts Add
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.desConfig" formControlName="desConfig" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Des Config
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.disabled" formControlName="disabled" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Disabled
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.drawerTransfer" formControlName="drawerTransfer" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Drawer Transfer
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.empTimeScheduler" formControlName="empTimeScheduler" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Emp TimeScheduler
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.extraItem" formControlName="extraItem" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Extra Item
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.gcRedeem" formControlName="gcRedeem" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    GC Redeem
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.gcSell" formControlName="gcSell" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          GC Sell
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.inventory" formControlName="inventory" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Inventory
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.inventoryAccess1" formControlName="inventoryAccess1" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Inventory Access1
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.inventoryAccess2" formControlName="inventoryAccess2" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Inventory Access2
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.inventoryPromotions" formControlName="inventoryPromotions" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Inventory Promotions
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoiceDeleteitems" formControlName="invoiceDeleteitems" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Invoice Delete Items
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoiceDeletesent" formControlName="invoiceDeletesent" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Invoice Delete sent
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoiceDiscount" formControlName="invoiceDiscount" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Invoice Discount
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoiceDiscountsLimit" formControlName="invoiceDiscountsLimit" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Invoice Discounts Limit
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoicePricechange" formControlName="invoicePricechange" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Invoice Price change
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.invoiceVoid" formControlName="invoiceVoid" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Invoice Void
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.isAdmin" formControlName="isAdmin" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Is Admin
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.isManager" formControlName="isManager" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Is Manager
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.issueCreditSlip" formControlName="issueCreditSlip" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Issue Credit Slip
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.kitchenReprint" formControlName="kitchenReprint" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      kitchen Reprint
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.negativePriceChange" formControlName="negativePriceChange" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Negative Price Change
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.openCashDrawer" formControlName="openCashDrawer" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Open Cash Drawer
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.overtimeThreshold" formControlName="overtimeThreshold" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Overtime Threshold
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.performEndofday" formControlName="performEndofday" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Perform End of day
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.picture" formControlName="picture" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Picture
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.printHold" formControlName="printHold" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Print Hold
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.pullbackInvoice" formControlName="pullbackInvoice" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Pull back Invoice
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.redeemCreditSlip" formControlName="redeemCreditSlip" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Redeem Credit Slip
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.refundItem" formControlName="refundItem" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Refund Item
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.reports1" formControlName="reports1" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Reports 1
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.reports2" formControlName="reports2" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Reports 2
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.reprintReceipt" formControlName="reprintReceipt" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Reprint Receipt
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.requiredClockin" formControlName="requiredClockin" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Required Clockin
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.sellSpecialItem" formControlName="sellSpecialItem" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Sell Special Item
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.setupAccess" formControlName="setupAccess" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Setup Access
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.setupEmployees" formControlName="setupEmployees" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Setup Employees
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.setupReceiptNotes" formControlName="setupReceiptNotes" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Setup Receipt Notes
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.splitChecks" formControlName="splitChecks" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Split Checks
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.taxExempt" formControlName="taxExempt" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Tax Exempt
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false"  [(ngModel)]="model.timeWorkedThisPeriod" formControlName="timeWorkedThisPeriod" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Time Worked This Period
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.transferServer" formControlName="transferServer" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Transfer Server
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch [disabled]="permissionView==0?true:false" formControlName="transferTable" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Transfer Table
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.transferTables" formControlName="transferTables" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Transfer Tables
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.vendorPayout" formControlName="vendorPayout" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Vendor Payout
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch [disabled]="permissionView==0?true:false" [(ngModel)]="model.vendors" formControlName="vendors" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Vendors
+                </div>
+                    </div>
+                    </div>
+               
+              </div>
+              
+
+               <!-- <div class="row">
+                  <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Add New Item</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Save</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Delete</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Duplicate</button>
+                   </div>
+               </div> -->
+
+            </form>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+
+          <!-- Basic Form Inputs card start -->
+
+        </app-card>
+        <!-- Input Alignment card end -->
+      </div>
+     
+</div>

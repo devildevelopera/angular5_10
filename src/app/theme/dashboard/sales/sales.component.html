@@ -1,0 +1,42 @@
+<!-- <simple-notifications [options]="options"></simple-notifications> -->
+
+<!-- <ngx-ui-loader [fgsColor]="config.fgsColor" [fgsType]="config.fgsType" [fgsSize]="config.fgsSize"></ngx-ui-loader> -->
+<!-- <simple-notifications [options]="options"></simple-notifications> -->
+<!-- <ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader> -->
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 10px">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="m-b-20">
+            <h4>Sales Report*</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Rows</th>
+                  <th scope="col">Line Type</th>
+                  <th scope="col">HH:mm</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dataFetched">
+                  <th scope="row">{{item[0]}}</th>
+                  <td>{{item[3]}}</td>
+                  <td>{{item[7]}}</td>
+                  <td>{{item[8]}}</td>
+                  <td>{{item[4]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>    

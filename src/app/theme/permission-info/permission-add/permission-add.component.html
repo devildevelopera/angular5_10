@@ -1,0 +1,443 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader>
+<div class="row">
+    <div class="col-sm-12">
+      <!-- Tab variant tab card start -->
+        <div class="row">
+          <div class="col-md-12 col-md-12">
+
+          </div>
+
+        </div>
+      <!-- Tab variant tab card start -->
+    </div>
+  </div>
+
+
+
+
+<div class="row" *ngIf="!IsAddInventory">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+        <h4>New Access Level</h4>
+        <!-- <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Duplicate</button>
+        <button class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete</button> -->
+        <button class="btn btn-primary" (click)="BacktoList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back to List</button>
+        <button class="btn btn-primary" (click)="SubmitAccessLevelDetails(AccessLevelForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Add  Access Level</button>
+      </div>
+    <div class="col-sm-12">
+
+        <app-card  [cardOptionBlock]="true">
+            <form [formGroup]="AccessLevelForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Access Level Name <span class="mandatory">*</span></label>
+                        <div>
+                          <input type="text" class="form-control" formControlName="accessLevel"  maxlength="50">
+                        </div>
+                        <span *ngIf="AccessLevelForm.get('accessLevel').touched && AccessLevelForm.get('accessLevel').hasError('required')" class="mandatory">
+                          Access Level is Required!
+                        </span>
+                          </div>
+                      </div>
+                  </div>
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-1" >
+                            <ui-switch formControlName="addCcTips" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Add Cc Tips
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="applyGratuity" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Apply Gratuity
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="approveCashcount" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Approve Cash Count
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="cashAlerts" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Cash Alerts
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="cashPickup" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Cash Pickup
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="closeShift" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Close Shift
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="comp" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Comp
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="currentCash" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Current Cash
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="custmorsAccount" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Custmors Account
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="deptsAdd" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Depts Add
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="desConfig" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Des Config
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="disabled" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Disabled
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="drawerTransfer" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Drawer Transfer
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="empTimeScheduler" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Emp TimeScheduler
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="extraItem" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2" style="margin-top: 1px;">
+                      Extra Item
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="gcRedeem" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    GC Redeem
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="gcSell" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          GC Sell
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="inventory" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Inventory
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch  formControlName="inventoryAccess1" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Inventory Access1
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="inventoryAccess2" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Inventory Access2
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="inventoryPromotions" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Inventory Promotions
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="invoiceDeleteitems" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Invoice Delete Items
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="invoiceDeletesent" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Invoice Delete sent
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="invoiceDiscount" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Invoice Discount
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="invoiceDiscountsLimit" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Invoice Discounts Limit
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="invoicePricechange" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Invoice Price change
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="invoiceVoid" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Invoice Void
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="isAdmin" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Is Admin
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="isManager" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Is Manager
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="issueCreditSlip" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Issue Credit Slip
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="kitchenReprint" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      kitchen Reprint
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="negativePriceChange" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Negative Price Change
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="openCashDrawer" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Open Cash Drawer
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="overtimeThreshold" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Overtime Threshold
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="performEndofday" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Perform End of day
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="picture" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Picture
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="printHold" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Print Hold
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="pullbackInvoice" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Pull back Invoice
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="redeemCreditSlip" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Redeem Credit Slip
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="refundItem" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Refund Item
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="reports1" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Reports 1
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="reports2" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Reports 2
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="reprintReceipt" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Reprint Receipt
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="requiredClockin" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Required Clockin
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="sellSpecialItem" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Sell Special Item
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="setupAccess" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Setup Access
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="setupEmployees" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Setup Employees
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="setupReceiptNotes" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Setup Receipt Notes
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="splitChecks" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Split Checks
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="taxExempt" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Tax Exempt
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="timeWorkedThisPeriod" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Time Worked This Period
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="transferServer" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Transfer Server
+                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <ui-switch formControlName="transferTable" size="small" ></ui-switch>
+                        </div>
+                      <div class="col-md-2" style="margin-top: 1px;">
+                          Transfer Table
+                      </div>
+                      <div class="col-md-1">
+                          <ui-switch formControlName="transferTables" size="small" ></ui-switch>
+                      </div>
+                    <div class="col-md-2" style="margin-top: 1px;">
+                        Transfer Tables
+                    </div>
+                    <div class="col-md-1">
+                        <ui-switch formControlName="vendorPayout" size="small" ></ui-switch>
+                    </div>
+                  <div class="col-md-2"  style="margin-top: 1px;">
+                      Vendor Payout
+                  </div>
+                  <div class="col-md-1">
+                      <ui-switch formControlName="vendors" size="small" ></ui-switch>
+                  </div>
+                <div class="col-md-2" style="margin-top: 1px;">
+                    Vendors
+                </div>
+                    </div>
+                    </div>
+               
+              </div>
+              
+
+               <!-- <div class="row">
+                  <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Add New Item</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Save</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Delete</button>
+                   </div>
+                   <div class="col-md-3">
+                      <button class="btn btn-mat btn-inverse ">Duplicate</button>
+                   </div>
+               </div> -->
+
+            </form>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+
+          <!-- Basic Form Inputs card start -->
+
+        </app-card>
+        <!-- Input Alignment card end -->
+      </div>
+     
+</div>

@@ -1,0 +1,141 @@
+// // @import '~@material/animation/functions';
+
+// $stepper-title-color: $primary;
+// $stepper-bar-color: $primary;
+// $stepper-label-color: $primary;
+// $stepper-button-color: $secondary-400;
+// $stepper-button-selected-color: $secondary-700;
+// $stepper-padding: 12px; // Gutter width
+// $stepper-title-size: $text-h4;
+// $stepper-button-size: $text-button;
+// $stepper-error-color: $danger;
+
+// .stepper-component {
+//     $steps-margin: 58px;
+
+//     // Steps list container
+//     &__steps {
+//         display: flex;
+//         justify-content: space-between;
+//         margin: 0;
+//         margin-bottom: $stepper-padding*2;
+//         padding: 0;
+//         position: relative;
+
+//         // Cancels out negative margin on first/last steps.
+//         margin-left: $steps-margin;
+//         margin-right: $steps-margin;
+
+//         &:before {
+//             background-color: $stepper-bar-color;
+//             left: 0;
+//             right: 0;
+//             width: 100%;
+//             height: 2px;
+//             content: '';
+//             position: absolute;
+//             top: 34px;
+//             z-index: 0;
+//         }
+//     }
+
+//     // Single step in steps list
+//     &__step {
+//         cursor: pointer;
+//         flex: 0 1 auto;
+//         z-index: 10;
+//         list-style: none;
+//         text-align: center;
+//         width: 125px;
+
+//         // First and last steps get negative margin which helps align the buttons properly on the end of the background line.
+//         &:first-child {
+//             margin-left: -$steps-margin;
+//         }
+//         &:last-child {
+//             margin-right: -$steps-margin;
+//         }
+//         // Step label
+//         &-label {
+//             color: $stepper-label-color;
+//             font-weight: 100;
+//         }
+
+//         &.error {
+//             .stepper-component__btn {
+//                 background-color: $stepper-error-color;
+//             }
+//         }
+//     }
+
+//     // Clickable part of stepper progress nav
+//     &__btn {
+//         background-color: $stepper-button-color;
+//         border-radius: 100%;
+//         display: inline-flex;
+//         height: 12px;
+//         width: 12px;
+//         z-index: 11;
+
+//     }
+
+//     // Active step style
+//     .stepper-component__step.active {
+//         .stepper-component__btn {
+//             background-color: $stepper-button-selected-color;
+//         }
+//     }
+
+//     &__panel {
+//         @extend .col-md-12;
+//         animation: mdc-animation-enter(fade-in, 200ms);
+
+//         // Hide panels by default
+//         display: none;
+
+//         // Show panel when active
+//         &.active {
+//             display: block;
+//         }
+
+//         &-title {
+//             color: $stepper-title-color;
+//             font-size: $stepper-title-size;
+//             margin-bottom: $stepper-padding*2;
+//         }
+
+//         &-content {
+//             @extend %shadow-02dp;
+//             padding: $stepper-padding;
+//         }
+//     }
+
+//     &__nav {
+//         @extend .col-md-12;
+//         display: flex;
+//         justify-content: space-between;
+//         margin-top: $stepper-padding*2;
+
+//         .btn {
+//             flex: 0 1 auto;
+//             font-size: $stepper-button-size;
+//             font-weight: 100;
+//             padding: 5px 12px;
+//             text-transform: uppercase;
+//             width: 130px;
+//         }
+//     }
+
+// }
+
+// @keyframes fade-in {
+//     from {
+//         transform: translateX(-1200px);
+//         opacity: 0;
+//     }
+
+//     to {
+//         transform: translateX(0);
+//         opacity: 1;
+//     }
+// }

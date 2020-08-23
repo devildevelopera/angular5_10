@@ -1,0 +1,63 @@
+<script>
+    // Basic stepper example
+    // See https://github.com/oguzhanoya/jquery-steps
+
+    const $stepper = $('#stepper');
+
+    $stepper.steps({
+        stepSelector: '.stepper-component__step',
+        contentSelector: '.stepper-component__panel',
+        footerSelector: '.stepper-component__nav',
+        onChange: () => {
+            // return this.isInputValid();
+        },
+        onFinish: () => {
+            // this.isFormValid()
+        },
+    });
+</script>
+
+<div class="stepper-component" id="stepper">
+    <ul class="stepper-component__steps">
+        <li class="stepper-component__step">
+            <div class="stepper-component__btn-label">1. Foo</div>
+            <a class="stepper-component__btn" href="#step1"></a></li>
+        <li class="stepper-component__step">
+            <div class="stepper-component__btn-label">2. Bar</div>
+            <a class="stepper-component__btn" href="#step2"></a></li>
+        <li class="stepper-component__step">
+            <div class="stepper-component__btn-label">3. Save</div>
+            <a class="stepper-component__btn" href="#step3"></a></li>
+    </ul>
+
+    <div class="stepper-component__content">
+        <div class="stepper-component__panel" id="step1">
+            <h3 class="stepper-component__panel-title">Step 1 Title</h3>
+            <div class="stepper-component__panel-content">
+                <p>Content here</p>
+            </div>
+        </div>
+
+        <div class="stepper-component__panel" id="step2">
+            <h3 class="stepper-component__panel-title">Step 2 Title</h3>
+            <div class="stepper-component__panel-content">
+                <p>Content here</p>
+            </div>
+        </div>
+
+        <div class="stepper-component__panel" id="step3">
+            <h3 class="stepper-component__panel-title">Step 3 Title</h3>
+            <div class="stepper-component__panel-content">
+                <p>Content here</p>
+            </div>
+        </div>
+
+        <div class="stepper-component__nav">
+            <button data-direction="prev" class="btn btn-info">Previous</button>
+            <button data-direction="next" class="btn btn-info">Next</button>
+            <button data-direction="finish" class="btn btn-info" (click)="save(f)">Finish</button>
+        </div>
+    </div>
+
+</div>
+<!-- end stepper -->

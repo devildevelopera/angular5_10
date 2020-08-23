@@ -1,0 +1,426 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader>
+<div class="row" *ngIf="!enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Stores</h4>
+     
+      <!-- <button class="btn btn-defat" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete Selected</button> -->
+      <!-- <button class="btn btn-primary" (click)="enableDisableBulkEdit()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Bulk edit</button> -->
+      <!-- <button class="btn btn-primary" (click)="enableDisableEditMode()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Add New Store</button> -->
+      <!-- <button class="btn btn-primary" (click)="getfilteredList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Search</button>  -->
+    </div>
+
+    <div class="col-sm-12">
+       
+        <app-card  [cardOptionBlock]="true">
+          <div class="row">
+          </div>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+         
+          <!-- Basic Form Inputs card start -->
+          <form>
+              
+            <div class="row">
+              <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Store Email</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('storeEmail',$event.target.value)" class="form-control" maxlength="50">
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-4">
+                
+            </div>
+            <div class="col-lg-4">
+              <button class="btn btn-primary" (click)="enableDisableEditMode()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Add</button>
+            </div>
+            </div>
+          
+        
+            
+            
+            
+            
+            
+          </form>
+        </app-card>
+        <!-- Input Alignment card end -->
+        <!-- <app-checkbox [StoreList]="StoreList" ></app-checkbox> -->
+        <app-card>
+          <ngx-datatable
+            class="data-table dt-chk"
+            [rows]="StoreList"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10"
+            [selected]="selected"
+            [loadingIndicator]="true"
+            (activate)="onActivate($event)"
+            (select)='onSelect($event)'
+            [scrollbarH]="true">
+            <!-- <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+        
+              </ng-template> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+              </ng-template> -->
+            <!-- </ngx-datatable-column> -->
+            <ngx-datatable-column name="Store Id" >
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    
+                      {{row.storeId}}
+                   
+                  </ng-template>
+          </ngx-datatable-column>
+            <ngx-datatable-column name="Store  Email">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                  {{row.storeEmail}}
+              </ng-template>
+            </ngx-datatable-column>
+          
+            <ngx-datatable-column name="Tax Rate">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                  {{row.taxRate}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action" [canAutoResize]="false" [sortable]="false">
+        
+        
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+               <i class="icofont icofont-ui-edit" (click)="UpdateStoreById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+               <i class="icofont icofont-ui-delete" (click)="deleteStoreById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-card>
+      </div>
+     
+</div>
+
+
+<div class="row" *ngIf="enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+        <button class="btn btn-primary" (click)="backToInventory()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+        <button class="btn btn-primary" (click)="SaveStoreInfo(StoreForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Save</button>
+      </div>
+    <div class="row">
+        <div class="col-sm-12">
+          <app-card>
+            <div class="row m-b-30">
+              <div class="col-md-12 col-xl-12">
+                <div class="md-tabs">
+                  <ngb-tabset>
+                    <ngb-tab title="Store Details">
+                      <ng-template ngbTabContent>
+                        <div [@fadeInOutTranslate] class="m-t-15">
+                          <div class="m-12">------------------------------------------------------------------------------------------------------------------------------------------------</div>
+                         <br>
+                          <form [formGroup]="StoreForm" novalidate>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Store Id</label>
+                                        <div>
+                                          <input type="number" [(ngModel)]="modal.storeId" class="form-control" formControlName="storeId"  maxlength="50">
+                                        </div>
+                                        <span *ngIf="StoreForm.get('storeId').touched && StoreForm.get('storeId').hasError('required')" class="mandatory">
+                                          Store Id is Required
+                                        </span>
+                                      </div>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Store Email</label>
+                                      <div>
+                                        <input type="text" [(ngModel)]="modal.storeEmail" class="form-control" formControlName="storeEmail"  maxlength="50">
+                                      </div>
+                                      <span *ngIf="StoreForm.get('storeEmail').touched && StoreForm.get('storeEmail').hasError('required')" class="mandatory">
+                                        Store Email is Required
+                                      </span>
+                                    </div>
+                              </div>
+                               
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Company Id</label>
+                                      <div>
+                                        <input type="number" [(ngModel)]="modal.companyId" class="form-control" formControlName="companyId"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Company Name</label>
+                                    <div>
+                                      <input type="text" [(ngModel)]="modal.companyName" class="form-control" formControlName="companyName"  maxlength="50">
+                                    </div>
+                                    <span *ngIf="StoreForm.get('companyName').touched && StoreForm.get('companyName').hasError('required')" class="mandatory">
+                                      Company Name is Required
+                                    </span>
+                                  </div>
+                            </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Company Phone</label>
+                                      <div>
+                                        <input type="text" [(ngModel)]="modal.companyPhone" class="form-control" formControlName="companyPhone"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Company Address</label>
+                                    <div>
+                                      <input type="text" [(ngModel)]="modal.companyAddress" class="form-control" formControlName="companyAddress"  maxlength="50">
+                                    </div>
+                                  
+                                  </div>
+                            </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Company State</label>
+                                      <div>
+                                        <input type="text" [(ngModel)]="modal.companyState" class="form-control" formControlName="companyState"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Company City</label>
+                                    <div>
+                                      <input type="text" [(ngModel)]="modal.companyCity" class="form-control" formControlName="companyCity"  maxlength="50">
+                                    </div>
+                                  
+                                  </div>
+                            </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Company Zip</label>
+                                      <div>
+                                        <input type="number" [(ngModel)]="modal.companyZip" class="form-control" formControlName="companyZip"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Logo Location</label>
+                                    <div>
+                                      <input type="text" [(ngModel)]="modal.logoLocation" class="form-control" formControlName="logoLocation"  maxlength="50">
+                                    </div>
+                                  
+                                  </div>
+                            </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Num Stations</label>
+                                      <div>
+                                        <input type="number" [(ngModel)]="modal.numStations" class="form-control" formControlName="numStations"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Tax Id</label>
+                                    <div>
+                                      <input type="number" [(ngModel)]="modal.taxId" class="form-control" formControlName="taxId"  maxlength="50">
+                                    </div>
+                                  
+                                  </div>
+                            </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label>Tax Rate</label>
+                                      <div>
+                                        <input type="number" [(ngModel)]="modal.taxRate" class="form-control" formControlName="taxRate"  maxlength="50">
+                                      </div>
+                                                                          </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="col-md-2" style="margin-top: 1px;">
+                                  Open
+                              </div>
+                              <div class="col-md-1">
+                                  <ui-switch formControlName="open" size="small" ></ui-switch>
+                              </div>
+                                  
+                                  </div>
+                              </div>
+                            </form>
+                        </div>
+                      </ng-template>
+                    </ngb-tab>
+                   
+                  </ngb-tabset>
+                </div>
+              </div>
+             
+            </div>
+           
+          </app-card>
+          <!-- Material tab card end -->
+        </div>
+      </div>
+  <!-- <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Add Store</h4>
+     
+      <button class="btn btn-primary" (click)="backToInventory()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-reply"></i>Back</button>
+      <button class="btn btn-primary" (click)="SaveStoreInfo(StoreForm.value)" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Save</button>
+    </div>
+  <div class="col-sm-12">
+
+      <app-card  [cardOptionBlock]="true">
+          <form [formGroup]="StoreForm" novalidate>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>First Name</label>
+                      <div>
+                        <input type="text" class="form-control" formControlName="firstName"  maxlength="50">
+                      </div>
+                      <span *ngIf="StoreForm.get('firstName').touched && StoreForm.get('firstName').hasError('required')" class="mandatory">
+                        First Name is Required
+                      </span>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Last Name</label>
+                      <div>
+                        <input type="text"  formControlName="lastName" class="form-control" maxlength="50">
+                      </div>
+                      <span *ngIf="StoreForm.get('lastName').touched && StoreForm.get('lastName').hasError('required')" class="mandatory">
+                        Last Name is Required
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div>
+                          <input type="text"  formControlName="email"  class="form-control" maxlength="50">
+                        </div>
+                        <span *ngIf="StoreForm.get('email').touched && StoreForm.get('email').hasError('required')" class="mandatory">
+                          Email Address is Required
+                        </span>
+                      </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <div>
+                          <input type="text"  formControlName="phone1"  class="form-control" maxlength="50">
+                        </div>
+                        <span *ngIf="StoreForm.get('phone1').touched && StoreForm.get('phone1').hasError('required')" class="mandatory">
+                          Phone Number is Required
+                        </span>
+                      </div>
+                </div>
+               
+              </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div>
+                          <input type="text"  formControlName="address1"  class="form-control">
+                        </div>
+                        <span *ngIf="StoreForm.get('address1').touched && StoreForm.get('address1').hasError('required')" class="mandatory">
+                          Address is Required!
+                        </span>
+                      </div>
+                  </div>
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label>Address 2</label>
+                        <div>
+                          <input type="text"  formControlName="address2"  class="form-control">
+                        </div>
+                       
+                    </div>
+              </div>
+             
+              
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>City</label>
+                        <div>
+                         <input type="text"  formControlName="city"  class="form-control">
+                       </div>
+                       <span *ngIf="StoreForm.get('city').touched && StoreForm.get('city').hasError('required')" class="mandatory">
+                         City is Required!
+                       </span>
+                      </div>
+                 </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>State</label>
+                        <div>
+                          <input type="text"  formControlName="state"  class="form-control">
+                        </div>
+                        <span *ngIf="StoreForm.get('state').touched && StoreForm.get('state').hasError('required')" class="mandatory">
+                          State is Required!
+                        </span>
+                      </div>
+              </div>
+              
+              </div>
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="form-group">
+                          <label>Zip Code</label>
+                          <div>
+                            <input type="text"  formControlName="zipCode"  class="form-control">
+                          </div>
+                          <span *ngIf="StoreForm.get('zipCode').touched && StoreForm.get('zipCode').hasError('required')" class="mandatory">
+                            Zip Code is Required!
+                          </span>
+                        </div>
+                   </div>
+              </div>
+              
+             
+
+           
+
+          </form>
+
+      </app-card>
+    
+    </div> -->
+   
+</div>

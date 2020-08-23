@@ -1,0 +1,141 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-ui-loader 
+[fgsColor]="config.fgsColor"
+[fgsType]="config.fgsType"
+[fgsSize]="config.fgsSize"
+  ></ngx-ui-loader>
+<div class="row" *ngIf="!enableEditMode">
+    <div class="col-sm-12" style="margin-bottom: 10px">
+      <h4>Access Level</h4>
+     
+      <!-- <button class="btn btn-defat" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Delete Selected</button> -->
+      <!-- <button class="btn btn-primary" (click)="enableDisableBulkEdit()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-edit"></i>Bulk edit</button> -->
+      <button class="btn btn-primary" (click)="AddNewAccessLevel()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-ui-add"></i>Add New Access Level</button>
+      <!-- <button class="btn btn-primary" (click)="getfilteredList()" style="float: right;margin-left: 10px;margin-right: 10px"><i class="icofont icofont-user-alt-3"></i>Search</button>  -->
+    </div>
+
+    <div class="col-sm-12">
+       
+        <app-card  [cardOptionBlock]="true">
+          <div class="row">
+          </div>
+          <!-- <p>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</p> -->
+         
+          <!-- Basic Form Inputs card start -->
+          <form>
+              
+            <div class="row">
+              <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Access Name</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('accessLevel',$event.target.value)" class="form-control" maxlength="50">
+                      </div>
+                    </div>
+              </div>
+
+              
+              <!-- <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Last Name</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('lastName',$event.target.value)" class="form-control">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                      <label>Phone Number</label>
+                      <div>
+                        <input type="text" (keyup)="filterListbyParamerters('phone1',$event.target.value)" class="form-control">
+                      </div>
+                    </div>
+                </div> -->
+            </div>
+          
+        
+            
+            
+            
+            
+            
+          </form>
+        </app-card>
+        <!-- Input Alignment card end -->
+        <!-- <app-checkbox [customerList]="customerList" ></app-checkbox> -->
+        <app-card>
+          <ngx-datatable
+            class="data-table dt-chk"
+            [rows]="permissionList"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10"
+            [selected]="selected"
+            [loadingIndicator]="true"
+            (activate)="onActivate($event)"
+            (select)='onSelect($event)'
+            [scrollbarH]="true">
+            <!-- <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+        
+              </ng-template> -->
+              <!-- <ng-template class="datatable-checkbox" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+                  <label>
+                    <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                  </label>
+                </div>
+              </ng-template> -->
+            <!-- </ngx-datatable-column> -->
+            <!-- <ngx-datatable-column name="Access Level Id" >
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span
+                      
+                      >
+                      {{row.accessLevelId}}
+                    </span>
+              
+                  </ng-template>
+          </ngx-datatable-column> -->
+            <ngx-datatable-column name="Access Level">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span
+                  >
+                  {{row.accessLevel}}
+                </span>
+                <!-- <input class="form-control"
+                  autofocus
+                  (blur)="updateValue($event,'row.lastName', row, rowIndex)"
+                  *ngIf="editing[rowIndex + '-row.lastName']"
+                  type="text" 
+                  [value]="row.lastName"
+                /> -->
+              </ng-template>
+            </ngx-datatable-column>
+          
+           
+            <ngx-datatable-column name="Action" [canAutoResize]="false" [sortable]="false">
+        
+        
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+                  <i class="icofont icofont-eye-alt" (click)="ViewPermissionById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+               <i class="icofont icofont-ui-edit" (click)="GetPermissionById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+               <i class="icofont icofont-ui-delete" (click)="deletePermissionById(row.id)" style="margin: 10px;size: 20px;cursor: pointer"></i>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </app-card>
+      </div>
+     
+</div>
+
+

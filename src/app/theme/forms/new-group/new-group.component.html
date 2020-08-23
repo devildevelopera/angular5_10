@@ -1,0 +1,115 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<ngx-ui-loader [fgsColor]="config.fgsColor" [fgsType]="config.fgsType" [fgsSize]="config.fgsSize"></ngx-ui-loader>
+<div class="row">
+  <div class="col-sm-12">
+    <!-- Tab variant tab card start -->
+    <div class="row">
+      <div class="col-md-12 col-lg-12"></div>
+    </div>
+    <!-- Tab variant tab card start -->
+  </div>
+</div>
+<form #modifierGroup="ngForm" (ngSubmit)="modifierGroup.form.valid && save()">
+<div class="row">
+  <div class="col-sm-12" style="margin-bottom: 10px">
+    <h4>New Group</h4>
+    <button type="submit" 
+            class="btn btn-primary" style="float: right;margin-left: 10px;margin-right: 10px">
+      <i class="icofont icofont-ui-add"></i>Add Group
+    </button>
+  </div>
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-block">
+        <!-- Basic group add-ons start -->
+        <div class="m-b-20">
+          <h4 class="sub-title">Add New Group*</h4>
+          
+            
+            <div class="form-group">
+              <div class="row">
+                <label for="modifierGroupID" class="col-sm-4 col-lg-2 col-form-label">Group ID</label>
+                <div class="col-sm-8 col-lg-10">
+                  <input name="modifierGroupID" type="number" #modifierGroupID="ngModel" class="form-control"
+                    [(ngModel)]="formData.modifierGroupID" required />
+                  <!-- <div *ngIf="modifierGroupID.invalid &&(modifierGroupID.dirty || modifierGroupID.touched)">
+                    <span *ngIf="modifierGroupID.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                      Modifier GroupID is required
+                    </span>
+                  </div> -->
+                  <div *ngIf="modifierGroup.submitted && modifierGroupID.invalid">
+                    <span *ngIf="modifierGroupID.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                      Modifier GroupID is required
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label for="groupName" class="col-sm-4 col-lg-2 col-form-label">Group Name</label>
+                <div class="col-sm-8 col-lg-10">
+                  <input name="modifierGroupName" type="text" #modifierGroupName="ngModel" class="form-control"
+                    [(ngModel)]="formData.modifierGroupName" required />
+                  <!-- <div *ngIf="modifierGroupName.invalid &&(modifierGroupName.dirty || modifierGroupName.touched)">
+                    <span *ngIf="modifierGroupName.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                      Modifier Group name is required
+                    </span>
+                  </div> -->
+                  <div *ngIf="modifierGroup.submitted && modifierGroupName.invalid">
+                      <span *ngIf="modifierGroupName.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                          Modifier Group name is required
+                      </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label for="storeId" class="col-sm-4 col-lg-2 col-form-label">Chose an store</label>
+                <div class="col-sm-8 col-lg-10">
+                    <select name="storeid" #storeid="ngModel" [(ngModel)]="formData.storeid" class="form-control" required>
+                        <option *ngFor="let store of stores" [value]="store.storeId">{{store.companyName}}</option>
+                      </select>
+                  <!-- <div *ngIf="storeid.invalid &&(storeid.dirty || storeid.touched)">
+                    <span *ngIf="storeid.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                      Store id is required
+                    </span>
+                  </div> -->
+                  <div *ngIf="modifierGroup.submitted && storeid.invalid">
+                      <span *ngIf="storeid.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                          Store id is required
+                      </span>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-4 col-lg-2 col-form-label">Chose Your modifiers</label>
+                <div class="col-sm-8 col-lg-10">
+                  <select name="modifiers" class="form-control" [(ngModel)]="selected" (change)="handle()"
+                    multiple="multiple" required>
+                    <option *ngFor="let modifier of modifiers; let i = index;" [value]="modifier">
+                      {{modifier.modifierName}}
+                    </option>
+                  </select>
+                  <div *ngIf="modifierGroup.submitted">
+                      <span *ngIf="modifiers.errors.required" style="text-align: center;margin-top: 15px;color: red;" >
+                          Must be select one at least
+                      </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
